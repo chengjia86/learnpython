@@ -25,22 +25,17 @@ If the implementation is hard to explain, it's a bad idea.
 If the implementation is easy to explain, it may be a good idea.
 Namespaces are one honking great idea -- let's do more of those!
 '''
-'''
-t1='\n'.join(list(map(lambda y:(' '.join(list(filter(lambda x:('ea' not in x),y.split())))),(text.replace('better','worse')).split('\n'))))
-print(t1)
 
-t2=t1.swapcase()
-print(t2)
-
-t3='\n'.join(list(map(lambda y:(' '.join(list(map(lambda x:(''.join(sorted(x))),y.split())))),t2.split('\n'))))
-print(t3)
-'''
-
-t1=text.replace('better','worse')
-print(t1)
-del_ea=re.sub(r"[a-zA-Z*]*ea[a-z]*[\s,'.!*]",'',t1)
-print(del_ea)
-t2=del_ea.swapcase()
-print(t2)
-t3=re.sub(r'[a-zA-Z][a-zA-Z]*',lambda x:(''.join(sorted(x.group(0)))),t2)
-print(t3)
+text=text.lower()
+text=text.replace(r"'s",' is')
+text=text.replace(r"'re",' are')
+text=text.replace(r"n't",' not')
+L=re.split(r"[\s\n*.,!-]+",text)
+L=L[1:-1]
+d={}
+for i in L:
+    d[i]=L.count(i)
+print(d)
+L1=sorted(list(zip(d.values(),d.keys())))
+for i in L1:
+    print('单词{}出现次数为{}'.format(i[1],i[0]))
